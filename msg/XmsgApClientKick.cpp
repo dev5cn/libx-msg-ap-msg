@@ -36,7 +36,7 @@ void XmsgApClientKick::handle(shared_ptr<XmsgNeUsr> nu, SptrXitp trans, shared_p
 	{
 		if (!client->channel->est)
 		{
-			LOG_DEBUG("x-msg-client channel already  lost: %s", client->toString().c_str())
+			LOG_DEBUG("x-msg-client channel already lost: %s", client->toString().c_str())
 			return;
 		}
 		client->channel->close();
