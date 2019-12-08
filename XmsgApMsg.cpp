@@ -18,6 +18,9 @@
  */
 #include <libx-msg-ap-core.h>
 #include "XmsgApMsg.h"
+#include "mgr/XmsgImMgrNeNetLoad.h"
+#include "mgr/XmsgImMgrNeXscServerQuery.h"
+#include "mgr/XmsgImMgrNeXscWorkerCount.h"
 #include "msg/XmsgApClientKick.h"
 #include "msg/XmsgImHlrAttachSimple.h"
 #include "msg/XmsgNeAuth.h"
@@ -50,6 +53,9 @@ void XmsgApMsg::init(vector<shared_ptr<XmsgImN2HMsgMgr>> pubMsgMgrs, shared_ptr<
 	}
 	X_MSG_N2H_PRPC_BEFOR_AUTH(priMsgMgr, XmsgNeAuthReq, XmsgNeAuthRsp, XmsgNeAuth::handle)
 	X_MSG_N2H_PRPC_AFTER_AUTH(priMsgMgr, XmsgApClientKickReq, XmsgApClientKickRsp, XmsgApClientKick::handle)
+	X_MSG_N2H_PRPC_AFTER_AUTH(priMsgMgr, XmsgImMgrNeNetLoadReq, XmsgImMgrNeNetLoadRsp, XmsgImMgrNeNetLoad::handle)
+	X_MSG_N2H_PRPC_AFTER_AUTH(priMsgMgr, XmsgImMgrNeXscServerQueryReq, XmsgImMgrNeXscServerQueryRsp, XmsgImMgrNeXscServerQuery::handle)
+	X_MSG_N2H_PRPC_AFTER_AUTH(priMsgMgr, XmsgImMgrNeXscWorkerCountReq, XmsgImMgrNeXscWorkerCountRsp, XmsgImMgrNeXscWorkerCount::handle)
 	priMsgMgr->setItcp([](XscWorker* wk, XscChannel* channel, shared_ptr<XscProtoPdu> pdu)
 	{
 		return XmsgApMsg::priMsgRoute(wk, channel, pdu);
