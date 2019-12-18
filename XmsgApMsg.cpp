@@ -140,30 +140,30 @@ XscMsgItcpRetType XmsgApMsg::pubMsgRoute4unidirection(shared_ptr<XscChannel> cli
 	return XscMsgItcpRetType::SUCCESS;
 }
 
-void XmsgApMsg::pubMsgRoute2ne(shared_ptr<XmsgNeUsrAp> ne, shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu)
+void XmsgApMsg::pubMsgRoute2ne(shared_ptr<XmsgNeUsrAp> nu, shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu)
 {
 	pdu->transm.addOob(XSC_TAG_UID, client->uid); 
-	if (ne->neg != X_MSG_IM_HLR) 
+	if (nu->neg != X_MSG_IM_HLR) 
 	{
 		pdu->transm.addOob(XSC_TAG_CGT, client->cgt); 
 		pdu->transm.addOob(XSC_TAG_PLATFORM, client->plat); 
 		pdu->transm.addOob(XSC_TAG_DEVICE_ID, client->did);
 	}
-	if (pdu->transm.trans->refDat && clientChannel->wk != ne->wk) 
+	if (pdu->transm.trans->refDat && clientChannel->wk != nu->wk) 
 		pdu->transm.trans->cloneDat();
-	ne->future([ne, clientChannel, client, pdu]
+	nu->future([nu, clientChannel, client, pdu]
 	{
-		if (ne->channel->est)
+		if (nu->channel->est)
 		{
-			ne->forward(clientChannel, client, pdu);
+			nu->forward(clientChannel, client, pdu);
 			return;
 		}
-		LOG_WARN("network element channel lost, ne-group: %s, ne: %s", ne->neg.c_str(), ne->uid.c_str()) 
+		LOG_WARN("network element channel lost, ne-group: %s, ne: %s", nu->neg.c_str(), nu->uid.c_str()) 
 		if (pdu->transm.trans->trans != XSC_TAG_TRANS_BEGIN) 
 		{
 			return;
 		}
-		clientChannel->future([ne, clientChannel, client, pdu ]
+		clientChannel->future([nu, clientChannel, client, pdu ]
 				{
 					XmsgApMsg::exceptionEnd(clientChannel, pdu, client, RET_EXCEPTION, "network element channel lost"); 
 				});

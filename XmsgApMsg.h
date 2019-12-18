@@ -35,7 +35,7 @@ private:
 	static XscMsgItcpRetType pubMsgRoute4begin(shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu); 
 	static XscMsgItcpRetType pubMsgRoute4end(shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu); 
 	static XscMsgItcpRetType pubMsgRoute4unidirection(shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu); 
-	static void pubMsgRoute2ne(shared_ptr<XmsgNeUsrAp> ne, shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu); 
+	static void pubMsgRoute2ne(shared_ptr<XmsgNeUsrAp> nu, shared_ptr<XscChannel> clientChannel, shared_ptr<XmsgClient> client, shared_ptr<XscProtoPdu> pdu); 
 	static void exceptionEnd(shared_ptr<XscChannel> clientChannel, shared_ptr<XscProtoPdu> pdu, SptrClient client, ushort ret, const string& desc); 
 };
 
